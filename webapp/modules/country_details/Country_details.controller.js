@@ -64,6 +64,19 @@ sap.ui.define([
 		},
 		navBack: function () {
 			this.oRouter.navTo("home");
+		},
+		formatDates: function (sDate) {
+			if (sDate) {
+				var date = new Date(sDate);
+				//Add a 0 if it is one number
+				var day = date.getDate() <= 9 ? "0" + date.getDate() : date.getDate();
+				var month = date.getMonth() <= 8 ? "0" + (date.getMonth() + 1) : (date.getMonth() + 1);
+				var year = date.getFullYear();
+
+				return day + "/" + month + "/" + year;
+			} else {
+				return sDate;
+			}
 		}
 	});
 });

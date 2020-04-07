@@ -31,7 +31,7 @@
 								<viz:dataset>
 									<viz.data:FlattenedDataset data="{confirmed>/}">
 										<viz.data:dimensions>
-											<viz.data:DimensionDefinition name="Date" value="{confirmed>Date}"/>
+											<viz.data:DimensionDefinition name="Date" value="{path: 'confirmed>Date', formatter: '.formatDates'}"/>
 										</viz.data:dimensions>
 										<viz.data:measures>
 											<viz.data:MeasureDefinition name="Confirmed" value="{confirmed>Cases}"/>
@@ -55,7 +55,7 @@
 								<viz:dataset>
 									<viz.data:FlattenedDataset data="{deaths>/}">
 										<viz.data:dimensions>
-											<viz.data:DimensionDefinition name="Date" value="{deaths>Date}"/>
+											<viz.data:DimensionDefinition name="Date" value="{path: 'deaths>Date', formatter: '.formatDates'}"/>
 										</viz.data:dimensions>
 										<viz.data:measures>
 											<viz.data:MeasureDefinition name="Deaths" value="{deaths>Cases}"/>
@@ -79,7 +79,7 @@
 								<viz:dataset>
 									<viz.data:FlattenedDataset data="{recovered>/}">
 										<viz.data:dimensions>
-											<viz.data:DimensionDefinition name="Date" value="{recovered>Date}"/>
+											<viz.data:DimensionDefinition name="Date" value="{path: 'recovered>Date', formatter: '.formatDates'}"/>
 										</viz.data:dimensions>
 										<viz.data:measures>
 											<viz.data:MeasureDefinition name="Recovered" value="{recovered>Cases}"/>
