@@ -46,7 +46,61 @@
 			"libs": {
 				"sap.ui.layout": {},
 				"sap.ui.core": {},
-				"sap.m": {}
+				"sap.m": {},
+				"sap.f": {}
+			}
+		},
+		"routing": {
+			"config": {
+				"routerClass": "sap.f.routing.Router",
+				"viewType": "XML",
+				"viewPath": "covid.visual.modules.home.Home",
+				"controlId": "fcl",
+				"transition": "slide",
+				"async": true
+			},
+			"routes": [
+				{
+					"pattern": "",
+					"name": "master",
+					"target": [
+						"master",
+						"summary"
+					]
+				},
+				{
+					"pattern": "home",
+					"name": "home",
+					"target": [
+						"master",
+						"summary"
+					]
+				},
+				{
+					"pattern": "detail/{country}/",
+					"name": "detail",
+					"target": [
+						"master",
+						"detail"
+					]
+				}
+			],
+			"targets": {
+				"master": {
+					"viewName": "Master",
+					"viewPath": "covid.visual.modules.master",
+					"controlAggregation": "beginColumnPages"
+				},
+				"summary": {
+					"viewName": "Summary",
+					"viewPath": "covid.visual.modules.summary",
+					"controlAggregation": "midColumnPages"
+				},
+				"detail": {
+					"viewName": "Country_details",
+					"viewPath": "covid.visual.modules.country_details",
+					"controlAggregation": "midColumnPages"
+				}
 			}
 		},
 		"contentDensities": {
@@ -65,31 +119,6 @@
 			"css": [{
 				"uri": "css/style.css"
 			}]
-		},
-		"routing": {
-			"config": {
-				"routerClass": "sap.m.routing.Router",
-				"viewType": "XML",
-				"async": true,
-				"viewPath": "covid.visual.modules.home.Home",
-				"controlAggregation": "pages",
-				"controlId": "app",
-				"clearControlAggregation": false
-			},
-			"routes": [{
-				"name": "RouteHome",
-				"pattern": "RouteHome",
-				"target": ["TargetHome"]
-			}],
-			"targets": {
-				"TargetHome": {
-					"viewType": "XML",
-					"transition": "slide",
-					"clearControlAggregation": false,
-					"viewId": "Home",
-					"viewName": "Home"
-				}
-			}
 		}
 	}
 }

@@ -1,0 +1,100 @@
+<mvc:View displayBlock="true" controllerName="covid.visual.modules.country_details.Country_details" xmlns="sap.m" xmlns:uxap="sap.uxap"
+	xmlns:viz="sap.viz.ui5.controls" xmlns:layout="sap.ui.layout" xmlns:mvc="sap.ui.core.mvc"
+	xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds" xmlns:viz.data="sap.viz.ui5.data" height="100%">
+	<uxap:ObjectPageLayout showTitleInHeaderContent="true" alwaysShowContentHeader="false" preserveHeaderStateOnScroll="false"
+		headerContentPinnable="true" isChildPage="true" upperCaseAnchorBar="false" height="100%">
+		<uxap:headerTitle>
+			<uxap:ObjectPageDynamicHeaderTitle>
+				<uxap:expandedHeading>
+					<Title text="{confirmed>/0/Country}" wrapping="true" class="sapUiSmallMarginEnd"/>
+				</uxap:expandedHeading>
+				<uxap:actions>
+					<OverflowToolbarButton icon="sap-icon://decline" text="show state" type="Transparent" tooltip="Go back" press="navBack"/>
+				</uxap:actions>
+			</uxap:ObjectPageDynamicHeaderTitle>
+		</uxap:headerTitle>
+		<uxap:headerContent>
+			<FlexBox wrap="Wrap">
+				<layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
+					<ObjectStatus title="Total Confirmed" text="{total>/Cases}"/>
+					<ObjectStatus title="Total Deaths" text="{total>/Deaths}"/>
+					<ObjectStatus title="Total Recovered" text="{total>/Recovered}"/>
+				</layout:VerticalLayout>
+			</FlexBox>
+		</uxap:headerContent>
+		<uxap:sections>
+			<uxap:ObjectPageSection title="Confirmed">
+				<uxap:subSections>
+					<uxap:ObjectPageSubSection>
+						<uxap:blocks>
+							<viz:VizFrame uiConfig="{applicationSet:'fiori'}" height='700px' width="100%" vizType='line'>
+								<viz:dataset>
+									<viz.data:FlattenedDataset data="{confirmed>/}">
+										<viz.data:dimensions>
+											<viz.data:DimensionDefinition name="Date" value="{confirmed>Date}"/>
+										</viz.data:dimensions>
+										<viz.data:measures>
+											<viz.data:MeasureDefinition name="Confirmed" value="{confirmed>Cases}"/>
+										</viz.data:measures>
+									</viz.data:FlattenedDataset>
+								</viz:dataset>
+								<viz:feeds>
+									<viz.feeds:FeedItem uid="valueAxis" type="Measure" values="Confirmed"/>
+									<viz.feeds:FeedItem uid="categoryAxis" type="Dimension" values="Date"/>
+								</viz:feeds>
+							</viz:VizFrame>
+						</uxap:blocks>
+					</uxap:ObjectPageSubSection>
+				</uxap:subSections>
+			</uxap:ObjectPageSection>
+			<uxap:ObjectPageSection title="Deaths">
+				<uxap:subSections>
+					<uxap:ObjectPageSubSection>
+						<uxap:blocks>
+							<viz:VizFrame uiConfig="{applicationSet:'fiori'}" height='700px' width="100%" vizType='line'>
+								<viz:dataset>
+									<viz.data:FlattenedDataset data="{deaths>/}">
+										<viz.data:dimensions>
+											<viz.data:DimensionDefinition name="Date" value="{deaths>Date}"/>
+										</viz.data:dimensions>
+										<viz.data:measures>
+											<viz.data:MeasureDefinition name="Deaths" value="{deaths>Cases}"/>
+										</viz.data:measures>
+									</viz.data:FlattenedDataset>
+								</viz:dataset>
+								<viz:feeds>
+									<viz.feeds:FeedItem uid="valueAxis" type="Measure" values="Deaths"/>
+									<viz.feeds:FeedItem uid="categoryAxis" type="Dimension" values="Date"/>
+								</viz:feeds>
+							</viz:VizFrame>
+						</uxap:blocks>
+					</uxap:ObjectPageSubSection>
+				</uxap:subSections>
+			</uxap:ObjectPageSection>
+			<uxap:ObjectPageSection title="Recovered">
+				<uxap:subSections>
+					<uxap:ObjectPageSubSection>
+						<uxap:blocks>
+							<viz:VizFrame uiConfig="{applicationSet:'fiori'}" height='700px' width="100%" vizType='line'>
+								<viz:dataset>
+									<viz.data:FlattenedDataset data="{recovered>/}">
+										<viz.data:dimensions>
+											<viz.data:DimensionDefinition name="Date" value="{recovered>Date}"/>
+										</viz.data:dimensions>
+										<viz.data:measures>
+											<viz.data:MeasureDefinition name="Recovered" value="{recovered>Cases}"/>
+										</viz.data:measures>
+									</viz.data:FlattenedDataset>
+								</viz:dataset>
+								<viz:feeds>
+									<viz.feeds:FeedItem uid="valueAxis" type="Measure" values="Recovered"/>
+									<viz.feeds:FeedItem uid="categoryAxis" type="Dimension" values="Date"/>
+								</viz:feeds>
+							</viz:VizFrame>
+						</uxap:blocks>
+					</uxap:ObjectPageSubSection>
+				</uxap:subSections>
+			</uxap:ObjectPageSection>
+		</uxap:sections>
+	</uxap:ObjectPageLayout>
+</mvc:View>

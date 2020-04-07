@@ -1,0 +1,33 @@
+<mvc:View displayBlock="true" controllerName="covid.visual.modules.master.Master" height="100%" xmlns="sap.m" xmlns:f="sap.f"
+	xmlns:custom="covid.visual.customControllers" xmlns:mvc="sap.ui.core.mvc">
+	<GenericTile class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" header="New Confirmed" press="onPress">
+		<TileContent unit="People">
+			<NumericContent scale="" value="{summaryNumbers>/Global/NewConfirmed}" valueColor="Critical" withMargin="false"/>
+		</TileContent>
+	</GenericTile>
+	<GenericTile class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" header="Total Confirmed" press="onPress">
+		<TileContent unit="People">
+			<NumericContent scale="" value="{summaryNumbers>/Global/TotalConfirmed}" valueColor="Critical" withMargin="false"/>
+		</TileContent>
+	</GenericTile>
+	<GenericTile class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" header="New Deaths" press="onPress">
+		<TileContent unit="People">
+			<NumericContent scale="" value="{summaryNumbers>/Global/NewDeaths}" valueColor="Error" withMargin="false"/>
+		</TileContent>
+	</GenericTile>
+	<GenericTile class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" header="Total Deaths" press="onPress">
+		<TileContent unit="People">
+			<NumericContent scale="" value="{summaryNumbers>/Global/TotalDeaths}" valueColor="Error" withMargin="false"/>
+		</TileContent>
+	</GenericTile>
+	<GenericTile class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" header="New Recovered" press="onPress">
+		<TileContent unit="People">
+			<NumericContent scale="" value="{summaryNumbers>/Global/NewRecovered}" withMargin="false"/>
+		</TileContent>
+	</GenericTile>
+	<GenericTile class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" header="Total Recovered" press="onPress">
+		<TileContent unit="People">
+			<NumericContent scale="" value="{summaryNumbers>/Global/TotalRecovered}" withMargin="false"/>
+		</TileContent>
+	</GenericTile>
+</mvc:View>

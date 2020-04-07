@@ -1,0 +1,48 @@
+<mvc:View displayBlock="true" controllerName="covid.visual.modules.master.Master" height="100%" xmlns="sap.m" xmlns:f="sap.f"
+	xmlns:custom="covid.visual.customControllers" xmlns:mvc="sap.ui.core.mvc">
+	<f:DynamicPage toggleHeaderOnTitleClick="false">
+		<f:title>
+			<f:DynamicPageTitle>
+				<f:heading>
+					<Title text="COVID-19"/>
+				</f:heading>
+			</f:DynamicPageTitle>
+		</f:title>
+		<f:content>
+			<Table id="country-table" inset="false" items="{path: 'summaryNumbers>/Countries', sorter: {path: 'TotalDeaths', descending: true}}"
+				class="sapFDynamicPageAlignContent" width="auto">
+				<headerToolbar>
+					<OverflowToolbar>
+						<ToolbarSpacer/>
+						<SearchField search="onSearch" width="17.5rem"/>
+						<OverflowToolbarButton icon="sap-icon://sort" type="Transparent" press="onSort"/>
+					</OverflowToolbar>
+				</headerToolbar>
+				<columns>
+					<Column width="12em">
+						<Text text="Country"/>
+					</Column>
+					<Column hAlign="End">
+						<Text text="Total Deaths"/>
+					</Column>
+				</columns>
+				<items>
+					<ColumnListItem type="Navigation" press="onContrySelect">
+						<cells>
+							<ObjectIdentifier title="{summaryNumbers>Country}" text="Total Confirmed: {summaryNumbers>TotalConfirmed}"/>
+							<ObjectNumber number="{summaryNumbers>TotalDeaths}"/>
+						</cells>
+					</ColumnListItem>
+				</items>
+			</Table>
+		</f:content>
+		<!-- DynamicPage Footer -->
+		<f:footer>
+			<OverflowToolbar>
+				<ToolbarSpacer/>
+				<Button type="Accept" text="Accept"/>
+				<Button type="Reject" text="Reject"/>
+			</OverflowToolbar>
+		</f:footer>
+	</f:DynamicPage>
+</mvc:View>

@@ -1,15 +1,16 @@
 sap.ui.define([
 	"sap/ui/core/UIComponent",
 	"sap/ui/Device",
-	"covid/visual/model/models"
-], function (UIComponent, Device, models) {
+	"covid/visual/model/models",
+	"sap/ui/model/json/JSONModel",
+	"covid/visual/services/covidAPI"
+], function (UIComponent, Device, models, JSONModel, CovidAPI) {
 	"use strict";
 
 	return UIComponent.extend("covid.visual.Component", {
-
+		covidApi: new CovidAPI(),
 		metadata: {
-			manifest: "json",
-			fullWidth: true
+			manifest: "json"
 		},
 
 		/**
@@ -21,11 +22,20 @@ sap.ui.define([
 			// call the base component's init function
 			UIComponent.prototype.init.apply(this, arguments);
 
+			this.covidApi.summary().get().then(function succsess(request) {
+				var data = JSON.parse(request.response);
+				var summaryModel = new JSONModel();
+				summaryModel.setSizeLimit(data.Countries.length);
+				summaryModel.setData(data);
+				this.setModel(summaryModel, "summaryNumbers");
+			}.bind(this));
+
 			// enable routing
 			this.getRouter().initialize();
 
 			// set the device model
 			this.setModel(models.createDeviceModel(), "device");
+
 		}
 	});
 });
