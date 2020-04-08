@@ -41,7 +41,7 @@ sap.ui.define([
 			oBinding.sort(oSorter);
 		},
 		returnToLocaleString: function (nNumber) {
-			return nNumber.toLocaleString('no');
+			return parseFloat(nNumber).toLocaleString('no');
 		}
 	});
 });

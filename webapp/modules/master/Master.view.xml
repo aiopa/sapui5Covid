@@ -19,8 +19,11 @@
 					</OverflowToolbar>
 				</headerToolbar>
 				<columns>
-					<Column width="12em">
+					<Column width="15em">
 						<Text text="Country"/>
+					</Column>
+					<Column>
+						<Text text="Total Confirmed"/>
 					</Column>
 					<Column hAlign="End">
 						<Text text="Total Deaths"/>
@@ -29,8 +32,9 @@
 				<items>
 					<ColumnListItem type="Navigation" press="onContrySelect">
 						<cells>
-							<ObjectIdentifier title="{summaryNumbers>Country}" text="Total Confirmed: {summaryNumbers>TotalConfirmed}"/>
-							<ObjectNumber number="{summaryNumbers>TotalDeaths}"/>
+							<ObjectIdentifier title="{summaryNumbers>Country}"/>
+							<Text text="{path: 'summaryNumbers>TotalConfirmed', formatter: '.returnToLocaleString'}"/>
+							<ObjectNumber number="{path: 'summaryNumbers>TotalDeaths', formatter: '.returnToLocaleString'}"/>
 						</cells>
 					</ColumnListItem>
 				</items>
