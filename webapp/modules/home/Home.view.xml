@@ -1,3 +1,5 @@
 <mvc:View controllerName="covid.visual.modules.home.Home" xmlns="sap.m" xmlns:f="sap.f" xmlns:mvc="sap.ui.core.mvc" height="100%">
-	<f:FlexibleColumnLayout id="fcl" stateChange="onStateChanged" layout="TwoColumnsMidExpanded" backgroundDesign="Translucent"/>
+	<App id="covidApp">
+		<f:FlexibleColumnLayout id="fcl" stateChange="onStateChanged" layout="TwoColumnsMidExpanded" backgroundDesign="Translucent"/>
+	</App>
 </mvc:View>

@@ -11,56 +11,44 @@ sap.ui.define([
 			this.oRouter = this.getOwnerComponent().getRouter();
 			this.oRouter.getRoute("detail").attachPatternMatched(this.onCountryMatch, this);
 			this.getView().setModel(new JSONModel(), "total");
-			var allModel = new JSONModel()
-			allModel.setSizeLimit(100000000)
+			var allModel = new JSONModel();
+			allModel.setSizeLimit(100000000);
 			this.getView().setModel(allModel, "all");
 		},
 		onCountryMatch: function (oEvent) {
 			var countrySlug = oEvent.getParameter("arguments").country;
+			var promises = [
+				this.covidApi.confirmed(countrySlug).get(),
+				this.covidApi.deaths(countrySlug).get(),
+				this.covidApi.recovered(countrySlug).get()
+			];
+			var oVizFrame = this.byId("case-types-line-chart");
+			oVizFrame.setBusy(true);
+			Promise.all(promises).then(function succsess(requests) {
+				oVizFrame.setBusy(false);
+				var confirmed = JSON.parse(requests[0].response);
+				var deaths = JSON.parse(requests[1].response);
+				var recovered = JSON.parse(requests[2].response);
+				this.getView().getModel("total").setProperty("/Cases", confirmed[confirmed.length - 1].Cases);
+				this.getView().getModel("total").setProperty("/Deaths", deaths[deaths.length - 1].Cases);
+				this.getView().getModel("total").setProperty("/Recovered", recovered[recovered.length - 1].Cases);
 
-			//Get confirmed
-			this.covidApi.confirmed(countrySlug).get().then(function succsess(request) {
-				var data = JSON.parse(request.response);
-				var confirmedModel = new JSONModel();
-				confirmedModel.setSizeLimit(data.length);
-				confirmedModel.setData(data);
-				this.getView().setModel(confirmedModel, "confirmed");
-				this.getView().getModel("total").setProperty("/Cases", data[data.length - 1].Cases);
-				this.getView().getModel("all").setProperty("/confirmed", data);
+				var lineGraphArr = [];
+				for (var i = 30; i < confirmed.length; i++) {
+					lineGraphArr.push({
+						Country: confirmed[i].Country,
+						date: confirmed[i].Date,
+						confirmed: confirmed[i].Cases,
+						deaths: deaths[i].Cases,
+						recovered: recovered[i].Cases
+					});
+				}
+
+				var lineGraphModel = new JSONModel();
+				lineGraphModel.setSizeLimit(lineGraphArr.length);
+				lineGraphModel.setData(lineGraphArr);
+				this.getView().setModel(lineGraphModel, "allCaseTypes");
 			}.bind(this));
-
-			//Get deaths
-			this.covidApi.deaths(countrySlug).get().then(function succsess(request) {
-				var data = JSON.parse(request.response);
-				var confirmedModel = new JSONModel();
-				confirmedModel.setSizeLimit(data.length);
-				confirmedModel.setData(data);
-				this.getView().setModel(confirmedModel, "deaths");
-				this.getView().getModel("total").setProperty("/Deaths", data[data.length - 1].Cases);
-				this.getView().getModel("all").setProperty("/deaths", data);
-			}.bind(this));
-
-			//Get recovered
-			this.covidApi.recovered(countrySlug).get().then(function succsess(request) {
-				var data = JSON.parse(request.response);
-				var recoveredModel = new JSONModel();
-				recoveredModel.setSizeLimit(data.length);
-				recoveredModel.setData(data);
-				this.getView().setModel(recoveredModel, "recovered");
-				this.getView().getModel("total").setProperty("/Recovered", data[data.length - 1].Cases);
-				this.getView().getModel("all").setProperty("/recovered", data);
-			}.bind(this));
-
-			//Get Active
-			/*	this.covidApi.active(countrySlug).get().then(function succsess(request) {
-					var data = JSON.parse(request.response);
-					var activeModel = new JSONModel();
-					activeModel.setSizeLimit(data.length);
-					activeModel.setData(data);
-					this.getView().setModel(activeModel, "active");
-					this.getView().getModel("total").setProperty("/Active", data[data.length - 1].Cases);
-					this.getView().getModel("all").setProperty("/active", data);
-				}.bind(this));*/
 		},
 		navBack: function () {
 			this.oRouter.navTo("home");

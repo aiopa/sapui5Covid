@@ -6,7 +6,7 @@
 		<uxap:headerTitle>
 			<uxap:ObjectPageDynamicHeaderTitle>
 				<uxap:expandedHeading>
-					<Title text="{confirmed>/0/Country}" wrapping="true" class="sapUiSmallMarginEnd"/>
+					<Title text="{allCaseTypes>/0/Country}" wrapping="true" class="sapUiSmallMarginEnd"/>
 				</uxap:expandedHeading>
 				<uxap:actions>
 					<OverflowToolbarButton icon="sap-icon://decline" text="show state" type="Transparent" tooltip="Go back" press="navBack"/>
@@ -23,70 +23,26 @@
 			</FlexBox>
 		</uxap:headerContent>
 		<uxap:sections>
-			<uxap:ObjectPageSection title="Confirmed">
+			<uxap:ObjectPageSection title="Cases">
 				<uxap:subSections>
 					<uxap:ObjectPageSubSection>
 						<uxap:blocks>
-							<viz:VizFrame uiConfig="{applicationSet:'fiori'}" height='700px' width="100%" vizType='line'>
+							<viz:VizFrame id="case-types-line-chart" uiConfig="{applicationSet:'fiori'}" height='700px' width="100%" vizType='line'>
 								<viz:dataset>
-									<viz.data:FlattenedDataset data="{confirmed>/}">
+									<viz.data:FlattenedDataset data="{allCaseTypes>/}">
 										<viz.data:dimensions>
-											<viz.data:DimensionDefinition name="Date" value="{path: 'confirmed>Date', formatter: '.formatDates'}"/>
+											<viz.data:DimensionDefinition name="Date" value="{path: 'allCaseTypes>date', formatter: '.formatDates'}"/>
 										</viz.data:dimensions>
 										<viz.data:measures>
-											<viz.data:MeasureDefinition name="Confirmed" value="{confirmed>Cases}"/>
+											<viz.data:MeasureDefinition name="Confirmed" value="{allCaseTypes>confirmed}"/>
+											<viz.data:MeasureDefinition name="Deaths" value="{allCaseTypes>deaths}"/>
+											<viz.data:MeasureDefinition name="Recovered" value="{allCaseTypes>recovered}"/>
 										</viz.data:measures>
 									</viz.data:FlattenedDataset>
 								</viz:dataset>
 								<viz:feeds>
 									<viz.feeds:FeedItem uid="valueAxis" type="Measure" values="Confirmed"/>
-									<viz.feeds:FeedItem uid="categoryAxis" type="Dimension" values="Date"/>
-								</viz:feeds>
-							</viz:VizFrame>
-						</uxap:blocks>
-					</uxap:ObjectPageSubSection>
-				</uxap:subSections>
-			</uxap:ObjectPageSection>
-			<uxap:ObjectPageSection title="Deaths">
-				<uxap:subSections>
-					<uxap:ObjectPageSubSection>
-						<uxap:blocks>
-							<viz:VizFrame uiConfig="{applicationSet:'fiori'}" height='700px' width="100%" vizType='line'>
-								<viz:dataset>
-									<viz.data:FlattenedDataset data="{deaths>/}">
-										<viz.data:dimensions>
-											<viz.data:DimensionDefinition name="Date" value="{path: 'deaths>Date', formatter: '.formatDates'}"/>
-										</viz.data:dimensions>
-										<viz.data:measures>
-											<viz.data:MeasureDefinition name="Deaths" value="{deaths>Cases}"/>
-										</viz.data:measures>
-									</viz.data:FlattenedDataset>
-								</viz:dataset>
-								<viz:feeds>
 									<viz.feeds:FeedItem uid="valueAxis" type="Measure" values="Deaths"/>
-									<viz.feeds:FeedItem uid="categoryAxis" type="Dimension" values="Date"/>
-								</viz:feeds>
-							</viz:VizFrame>
-						</uxap:blocks>
-					</uxap:ObjectPageSubSection>
-				</uxap:subSections>
-			</uxap:ObjectPageSection>
-			<uxap:ObjectPageSection title="Recovered">
-				<uxap:subSections>
-					<uxap:ObjectPageSubSection>
-						<uxap:blocks>
-							<viz:VizFrame uiConfig="{applicationSet:'fiori'}" height='700px' width="100%" vizType='line'>
-								<viz:dataset>
-									<viz.data:FlattenedDataset data="{recovered>/}">
-										<viz.data:dimensions>
-											<viz.data:DimensionDefinition name="Date" value="{path: 'recovered>Date', formatter: '.formatDates'}"/>
-										</viz.data:dimensions>
-										<viz.data:measures>
-											<viz.data:MeasureDefinition name="Recovered" value="{recovered>Cases}"/>
-										</viz.data:measures>
-									</viz.data:FlattenedDataset>
-								</viz:dataset>
-								<viz:feeds>
 									<viz.feeds:FeedItem uid="valueAxis" type="Measure" values="Recovered"/>
 									<viz.feeds:FeedItem uid="categoryAxis" type="Dimension" values="Date"/>
 								</viz:feeds>

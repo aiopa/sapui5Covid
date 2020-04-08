@@ -6,7 +6,7 @@
 		</TileContent>
 	</GenericTile>
 	<GenericTile class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" header="Total Confirmed" press="onPress">
-		<TileContent unit="People">
+		<TileContent unit="">
 			<NumericContent scale="" value="{summaryNumbers>/Global/TotalConfirmed}" valueColor="Critical" withMargin="false"/>
 		</TileContent>
 	</GenericTile>

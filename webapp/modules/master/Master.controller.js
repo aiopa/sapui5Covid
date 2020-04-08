@@ -12,7 +12,7 @@ sap.ui.define([
 
 		onInit: function () {
 			this.oRouter = this.getOwnerComponent().getRouter();
-			this._bDescendingSort = false;
+			this._bDescendingSort = true;
 		},
 		onContrySelect: function (oEvent) {
 			var countryPath = oEvent.getSource().getBindingContext("summaryNumbers").getPath();

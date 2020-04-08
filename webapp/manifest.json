@@ -14,7 +14,6 @@
 			"version": "1.40.12"
 		}
 	},
-
 	"sap.ui": {
 		"fullWidth": true,
 		"technology": "UI5",
@@ -32,7 +31,6 @@
 			"phone": true
 		}
 	},
-
 	"sap.ui5": {
 		"flexEnabled": false,
 		"rootView": {
@@ -116,9 +114,15 @@
 			}
 		},
 		"resources": {
-			"css": [{
-				"uri": "css/style.css"
-			}]
+			"css": [
+				{
+					"uri": "css/style.css"
+				}
+			]
 		}
+	},
+	"sap.platform.hcp": {
+		"uri": "webapp",
+		"_version": "1.1.0"
 	}
 }
