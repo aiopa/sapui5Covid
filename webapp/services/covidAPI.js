@@ -185,8 +185,8 @@ sap.ui.define([
 				}
 			};
 		},
-		active: function (countrySlug) {
-			var serviceEndpoint = this.url + "total/country/" + countrySlug + "/status/active";
+		liveTotals: function (countrySlug) {
+			var serviceEndpoint = this.url + "live/country/" + countrySlug + "/status/deaths";
 			return {
 				get: function (id, params) {
 					var request = new XMLHttpRequest();

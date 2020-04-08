@@ -6,7 +6,7 @@
 		<uxap:headerTitle>
 			<uxap:ObjectPageDynamicHeaderTitle>
 				<uxap:expandedHeading>
-					<Title text="{allCaseTypes>/0/Country}" wrapping="true" class="sapUiSmallMarginEnd"/>
+					<Title text="{allCaseTypes>/0/Country} Total" wrapping="true" class="sapUiSmallMarginEnd"/>
 				</uxap:expandedHeading>
 				<uxap:actions>
 					<OverflowToolbarButton icon="sap-icon://decline" text="show state" type="Transparent" tooltip="Go back" press="navBack"/>
@@ -15,15 +15,26 @@
 		</uxap:headerTitle>
 		<uxap:headerContent>
 			<FlexBox wrap="Wrap">
-				<layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
-					<ObjectStatus title="Total Confirmed" text="{total>/Cases}"/>
-					<ObjectStatus title="Total Deaths" text="{total>/Deaths}"/>
-					<ObjectStatus title="Total Recovered" text="{total>/Recovered}"/>
-				</layout:VerticalLayout>
+				<GenericTile class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" header="Total Confirmed" press="onPress">
+					<TileContent unit="People">
+						<NumericContent value="{path: 'liveTotals>/toDay/Confirmed'}" valueColor="Critical" withMargin="false"
+							indicator="{liveTotals>/toDay/ConfirmedUpOrDown}" truncateValueTo="10"/>
+					</TileContent>
+				</GenericTile>
+				<GenericTile class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" header="Total Deaths" press="onPress">
+					<TileContent unit="People">
+						<NumericContent value="{liveTotals>/toDay/Deaths}" valueColor="Error" withMargin="false" truncateValueTo="10"/>
+					</TileContent>
+				</GenericTile>
+				<GenericTile class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" header="Total Recovered" press="onPress">
+					<TileContent unit="People">
+						<NumericContent value="{liveTotals>/toDay/Recovered}" withMargin="false" truncateValueTo="10" valueColor="Good"/>
+					</TileContent>
+				</GenericTile>
 			</FlexBox>
 		</uxap:headerContent>
 		<uxap:sections>
-			<uxap:ObjectPageSection title="Cases">
+			<uxap:ObjectPageSection title="{allCaseTypes>/0/Country} by day">
 				<uxap:subSections>
 					<uxap:ObjectPageSubSection>
 						<uxap:blocks>

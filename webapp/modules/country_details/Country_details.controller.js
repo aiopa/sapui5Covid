@@ -29,29 +29,65 @@ sap.ui.define([
 				var confirmed = JSON.parse(requests[0].response);
 				var deaths = JSON.parse(requests[1].response);
 				var recovered = JSON.parse(requests[2].response);
-				this.getView().getModel("total").setProperty("/Cases", confirmed[confirmed.length - 1].Cases);
-				this.getView().getModel("total").setProperty("/Deaths", deaths[deaths.length - 1].Cases);
-				this.getView().getModel("total").setProperty("/Recovered", recovered[recovered.length - 1].Cases);
 
-				var lineGraphArr = [];
-				for (var i = 30; i < confirmed.length; i++) {
-					lineGraphArr.push({
-						Country: confirmed[i].Country,
-						date: confirmed[i].Date,
-						confirmed: confirmed[i].Cases,
-						deaths: deaths[i].Cases,
-						recovered: recovered[i].Cases
+				if (confirmed.length > 0 && deaths.length > 0 && recovered.length > 0) {
+					this.getView().getModel("total").setProperty("/Cases", confirmed[confirmed.length - 1].Cases);
+					this.getView().getModel("total").setProperty("/Deaths", deaths[deaths.length - 1].Cases);
+					this.getView().getModel("total").setProperty("/Recovered", recovered[recovered.length - 1].Cases);
+
+					var totalDeaths = deaths[deaths.length - 1].Cases.toLocaleString('no');
+					var totalRecovered = recovered[recovered.length - 1].Cases.toLocaleString('no');
+					var totalConfirmed = confirmed[confirmed.length - 1].Cases.toLocaleString('no');
+
+					var lineGraphArr = [];
+					for (var i = 0; i < confirmed.length; i++) {
+						lineGraphArr.push({
+							Country: confirmed[i].Country,
+							date: confirmed[i].Date,
+							confirmed: confirmed[i].Cases,
+							deaths: deaths[i].Cases,
+							recovered: recovered[i].Cases
+						});
+					}
+
+					var lineGraphModel = new JSONModel();
+					lineGraphModel.setSizeLimit(lineGraphArr.length);
+					lineGraphModel.setData(lineGraphArr);
+					this.getView().setModel(lineGraphModel, "allCaseTypes");
+					var liveModel = new JSONModel();
+					liveModel.setData({
+						toDay: {
+							Confirmed: totalConfirmed,
+							Deaths: totalDeaths,
+							Recovered: totalRecovered
+						}
 					});
+					this.getView().setModel(liveModel, "liveTotals");
+
+					oVizFrame.setVizProperties({
+						plotArea: {
+							window: {
+								start: "entireDataSet"
+							}
+						},
+						title: {
+							text: "Cases"
+						}
+					});
+				} else {
+					sap.m.MessageToast.show("No data receaved\n\nTry another country");
 				}
 
-				var lineGraphModel = new JSONModel();
-				lineGraphModel.setSizeLimit(lineGraphArr.length);
-				lineGraphModel.setData(lineGraphArr);
-				this.getView().setModel(lineGraphModel, "allCaseTypes");
 			}.bind(this));
 		},
 		navBack: function () {
 			this.oRouter.navTo("home");
+		},
+		formatSmallNumber: function (nNumber) {
+			if (nNumber.toString().length > 4) {
+				return "M";
+			}
+			return "";
 		},
 		formatDates: function (sDate) {
 			if (sDate) {

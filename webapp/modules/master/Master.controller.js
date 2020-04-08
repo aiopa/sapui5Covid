@@ -39,6 +39,9 @@ sap.ui.define([
 				oSorter = new Sorter("TotalDeaths", this._bDescendingSort);
 
 			oBinding.sort(oSorter);
+		},
+		returnToLocaleString: function (nNumber) {
+			return nNumber.toLocaleString('no');
 		}
 	});
 });
